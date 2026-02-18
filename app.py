@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -24,7 +25,7 @@ def single_book():
         search_id = request.form['id']
         for x in books:
             if int(search_id) == x['id']:
-                return x
+                return jsonify(x)
         return jsonify({'Error': 'Book Not Found'})
     else:
         return render_template('single_book.html')
@@ -89,4 +90,5 @@ def update_book():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    serve(app, host='0.0.0.0', port=8080)
