@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+import os
 from waitress import serve
 
 app = Flask(__name__)
@@ -91,4 +92,6 @@ def update_book():
 
 if __name__ == '__main__':
     # app.run(debug=True)
-    serve(app, host='0.0.0.0', port=8080)
+    # Render sets PORT, fallback for local dev
+    port = int(os.environ.get('PORT', 8080))
+    serve(app, host='0.0.0.0', port=port)
